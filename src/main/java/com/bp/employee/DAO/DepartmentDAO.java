@@ -27,9 +27,7 @@ public class DepartmentDAO {
 		
 		try {
 			departmentsList = em.createQuery(query, Department.class).getResultList();
-			for(Department x: departmentsList) {
-				System.out.println(x.getAbbreviation() + " " + x.getDepartDesc() +" " + x.getId());
-			}
+			
 		}catch (Exception e) {
 			
 		}

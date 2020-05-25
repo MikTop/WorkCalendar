@@ -39,5 +39,21 @@ public class PositionDAO {
         }
 		
 	}
+	
+	public static String getPositionDescByID (int id) {
+		String positionDesc = null;
+		EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
+		
+		try {
+			String query = "SELECT positionDesc FROM Position WHERE id =: id ";
+			positionDesc = (String) em.createQuery(query).setParameter("id", id).getSingleResult();
+			
+		}catch (Exception e) {
+			
+		}
+		
+		
+		return positionDesc;
+	}
 
 }

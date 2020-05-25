@@ -97,11 +97,7 @@ public class WorkTimeDescDAO {
 		}catch (Exception e) {
 			
 		}
-		/*
-		for(WorkTimeDesc e: workTimeDescList) {
-			System.out.println(e.getId() + " "+ e.getWorkTimeDesc());
-		}
-		*/
+		
 		return workTimeDesc;
 	}
 

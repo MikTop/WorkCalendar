@@ -27,7 +27,7 @@ public class Department implements Serializable {
 
 	public Department() {
 		super();
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	public Department(int id, String abbreviation, String departDesc) {

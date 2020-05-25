@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name = "dayType")
+@Table(name = "daytype")
 public class DayType implements Serializable {
 
 	/**
@@ -31,7 +31,7 @@ public class DayType implements Serializable {
 
 	public DayType() {
 		super();
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	

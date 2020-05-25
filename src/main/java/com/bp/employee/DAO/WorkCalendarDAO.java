@@ -35,13 +35,7 @@ public class WorkCalendarDAO {
 		try {
 			
 			calendarList = em.createNativeQuery(query, WorkCalendar.class).getResultList();	
-		//calendarList = em.createQuery(query, WorkCalendar.class).getResultList();
-		/*
-		for(WorkCalendar x:calendarList ) {
-			System.out.println(x.getId() + " " +x.getDay().toString());
-		}
-		*/
-		//System.out.println(calendarList.size());		
+		
 		}catch (Exception e) {
 			
 		}
@@ -82,7 +76,7 @@ public class WorkCalendarDAO {
 						if (s1.length() < 2) {
 							//s1 = "0" + s1;
 						}
-						//System.out.println(i + ") "+ s1);
+						
 						int changeDay = Integer.parseInt(s1);
 						int changeYear = Integer.parseInt(year);
 						calend.set(changeYear, i-1, changeDay);
@@ -156,7 +150,7 @@ public class WorkCalendarDAO {
 	            String query = "FROM WorkCalendar  WHERE day =: date";
 	            calendar =  em.createQuery(query, WorkCalendar.class).setParameter("date", date).getSingleResult();
 	            calendar.setDayType(1);
-	        	//System.out.println(calendar.getId() + " " + calendar.getDay() + " " + calendar.getDayType());
+	        	
 	            
 	 
 	            
@@ -204,11 +198,7 @@ public class WorkCalendarDAO {
 			Stream<WorkCalendar> stream = getCalendarList().stream();
 			
 			List<WorkCalendar> workCalendarListByMonth = stream.filter(x -> x.getDay().getMonth() == month).collect(Collectors.toList());
-			/*
-			for(WorkCalendar x:workCalendarListByMonth ) {
-				System.out.println(x.getDay().toString());
-			}
-			*/
+			
 			return workCalendarListByMonth;
 			
 		}
@@ -223,12 +213,7 @@ public class WorkCalendarDAO {
 			try {
 				
 				calendarList = em.createQuery(query, Date.class).getResultList();	
-			//calendarList = em.createQuery(query, WorkCalendar.class).getResultList();
-			/*
-			for(Date x:calendarList ) {
-				System.out.println(x.toString());
-			}
-			*/
+			
 			System.out.println(calendarList.size());		
 			}catch (Exception e) {
 				
