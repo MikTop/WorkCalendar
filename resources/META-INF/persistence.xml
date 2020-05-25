@@ -19,13 +19,16 @@ mapped to database tables. Database driver, location, userid and pw
         <class>com.bp.employee.domain.Employee</class>
         <class>com.bp.employee.domain.WorkCalendar</class>
         <class>com.bp.employee.domain.DayType</class>
+        <class>com.bp.employee.domain.Department</class>
+        <class>com.bp.employee.domain.WorkTimeDesc</class>
+        <class>com.bp.employee.domain.WorkTimeSheet</class>
         <properties>
             <!-- Driver for DB database -->
             <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
             <!-- URL for DB -->
-            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/employee" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/employee" />
             <!-- Username -->
-            <property name="javax.persistence.jdbc.user" value="my" />
+            <property name="javax.persistence.jdbc.user" value="root" />
             <!-- Password -->
             <property name="javax.persistence.jdbc.password" value="1234" />
         </properties>

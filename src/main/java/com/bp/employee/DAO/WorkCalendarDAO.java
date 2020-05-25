@@ -8,11 +8,15 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 
 import com.bp.employee.domain.WorkCalendar;
 
@@ -21,8 +25,33 @@ public class WorkCalendarDAO {
             .createEntityManagerFactory("employee");
 	
 	
+	public static List<WorkCalendar> getCalendarList(){
+		EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
+		EntityTransaction et = null;
+		
+		List <WorkCalendar> calendarList = null;
+		String query = "SELECT * FROM calendar  ";
+		
+		try {
+			
+			calendarList = em.createNativeQuery(query, WorkCalendar.class).getResultList();	
+		//calendarList = em.createQuery(query, WorkCalendar.class).getResultList();
+		/*
+		for(WorkCalendar x:calendarList ) {
+			System.out.println(x.getId() + " " +x.getDay().toString());
+		}
+		*/
+		//System.out.println(calendarList.size());		
+		}catch (Exception e) {
+			
+		}
+		return calendarList  ;
+	}
+	
+	
 	public static void updateCalendarByFile(String path, String year) {
 		// "F:\\Education\\workingCalendar.csv.txt"- тестовый путь
+		// получить файл csv c сайта https://data.gov.ru/opendata/7708660670-proizvcalendar
 		
 		File file = new File(path);
 		String str;
@@ -51,9 +80,14 @@ public class WorkCalendarDAO {
 							s1 = s1.substring(0, s1.length ()-1);
 						}
 						if (s1.length() < 2) {
-							s1 = "0" + s1;
+							//s1 = "0" + s1;
 						}
-						System.out.println(i + ") "+ s1);
+						//System.out.println(i + ") "+ s1);
+						int changeDay = Integer.parseInt(s1);
+						int changeYear = Integer.parseInt(year);
+						calend.set(changeYear, i-1, changeDay);
+						date = calend.getTime();
+						updateDayByDate(date);
 						
 					}
 					i++;
@@ -115,27 +149,27 @@ public class WorkCalendarDAO {
 			WorkCalendar calendar = null;
 			
 			try {
-	            // Get transaction and start
+	            
 	            et = em.getTransaction();
 	            et.begin();
 	 
 	            String query = "FROM WorkCalendar  WHERE day =: date";
 	            calendar =  em.createQuery(query, WorkCalendar.class).setParameter("date", date).getSingleResult();
-	        	
-	        	System.out.println(calendar.getId() + " " + calendar.getDay() + " " + calendar.getDayType());
-	            calendar.setDayType(2);
+	            calendar.setDayType(1);
+	        	//System.out.println(calendar.getId() + " " + calendar.getDay() + " " + calendar.getDayType());
+	            
 	 
-	            // Save the customer object
+	            
 	            em.persist(calendar);
 	            et.commit();
 	        } catch (Exception ex) {
-	            // If there is an exception rollback changes
+	            
 	            if (et != null) {
 	                et.rollback();
 	            }
 	            ex.printStackTrace();
 	        } finally {
-	            // Close EntityManager
+	            
 	            em.close();
 	        }
 			
@@ -165,6 +199,43 @@ public class WorkCalendarDAO {
 		}
 			
 		}
+		
+		public static List<WorkCalendar> getWorkCalendarByMonth(int month){
+			Stream<WorkCalendar> stream = getCalendarList().stream();
+			
+			List<WorkCalendar> workCalendarListByMonth = stream.filter(x -> x.getDay().getMonth() == month).collect(Collectors.toList());
+			/*
+			for(WorkCalendar x:workCalendarListByMonth ) {
+				System.out.println(x.getDay().toString());
+			}
+			*/
+			return workCalendarListByMonth;
+			
+		}
+		
+		public static List<Date> getCalendarList1(){
+			EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
+			EntityTransaction et = null;
+			
+			List <Date> calendarList = null;
+			String query = "SELECT day FROM WorkCalendar  ";
+			
+			try {
+				
+				calendarList = em.createQuery(query, Date.class).getResultList();	
+			//calendarList = em.createQuery(query, WorkCalendar.class).getResultList();
+			/*
+			for(Date x:calendarList ) {
+				System.out.println(x.toString());
+			}
+			*/
+			System.out.println(calendarList.size());		
+			}catch (Exception e) {
+				
+			}
+			return calendarList  ;
+		}
+		
 
 }
 
