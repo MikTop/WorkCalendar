@@ -7,6 +7,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
+import com.bp.employee.GUI.GuiError;
 import com.bp.employee.domain.Department;
 
 public class DepartmentDAO {
@@ -18,6 +19,7 @@ public class DepartmentDAO {
 	
 	
 	public static List<Department> getDepartmentsList(){
+		if(ENTITY_MANAGER_FACTORY == null)new GuiError();
 		EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
 		EntityTransaction et = null;
 		
@@ -29,7 +31,7 @@ public class DepartmentDAO {
 			departmentsList = em.createQuery(query, Department.class).getResultList();
 			
 		}catch (Exception e) {
-			
+			new GuiError();
 		}
 		
 		

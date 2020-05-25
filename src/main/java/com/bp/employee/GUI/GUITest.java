@@ -31,6 +31,9 @@ public class GUITest extends JFrame{
 		tabsRight.setEnabledAt(0, false);
 	    
 	    List <Department> departmentList = DepartmentDAO.getDepartmentsList();
+	    if(departmentList == null) {
+	    	new GuiError();
+	    }
 	    
 	    
 	     for (int i = 0; i < departmentList.size(); i++) {     
